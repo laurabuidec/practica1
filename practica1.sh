@@ -47,4 +47,30 @@ while [ "$opcio" != "q" ] ; do
 			    fi
 		    fi
 		    ;;
-		    
+		     #5. Llistat dels estats del país seleccionat
+		     "le")   if [ -z "$sc" ]; then
+			     read -p "Selecciona un país: " sc
+
+	
+			     if grep -q "$sc" cities.csv; then
+				     grep "$sc" cities.csv | awk -F ',' -v sc="$sc" '$8 == sc {print $4, $5}' | sort | uniq
+		    	 	fi
+		     fi
+		     ;;
+		     #6. Llistat de les poblacions del país selecionat
+		     "lcp")   if [ -z "$sc" ]; then
+		     read -p "Selecciona un país: " sc
+		     fi
+		    	 if grep -q "$sc" cities.csv; then
+			     grep "$sc" cities.csv | awk -F ',' -v sc="$sc" '$8 == sc {print $2, $11}' | sort | uniq
+		    	 fi
+		     ;;
+		     #7. Extreure les poblacions del país seleccionat
+		     "ecp")   if [ -z "$sc" ]; then
+		     read -p "Selecciona un país: " sc
+		     fi
+		     if grep -q "$sc" cities.csv; then
+			     codi_pais=$(grep "$sc" cities.csv | awk -F ',' -v sc="$sc" '$8 == sc {print $7; exit}')
+			     grep "$sc" cities.csv | awk -F ',' '{print $2, $11}' > "${codi_pais}.csv"
+		     fi
+		     ;;				  
