@@ -104,6 +104,7 @@ while [ "$opcio" != "q" ] ; do
 		    fi
 		    ;;	
     		    #10. Obtenir dades d'una ciutat de la Wikidata
+		    #el URL proporcionat no funciona
     		    "gwd")
    
 		    if [ -z "$sc" ]; then
