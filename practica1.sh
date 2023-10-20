@@ -15,3 +15,8 @@ echo "Obtenir estadístiques (est)"
 while [ "$opcio" != "q" ] ; do
        	read -p "Escull una opció: " opcio
 	case $opcio in
+
+		  #1. Sortir
+		  "q") echo "Sortint de l'aplicació"
+		  exit 0
+		  ;;
