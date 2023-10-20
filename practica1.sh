@@ -73,4 +73,33 @@ while [ "$opcio" != "q" ] ; do
 			     codi_pais=$(grep "$sc" cities.csv | awk -F ',' -v sc="$sc" '$8 == sc {print $7; exit}')
 			     grep "$sc" cities.csv | awk -F ',' '{print $2, $11}' > "${codi_pais}.csv"
 		     fi
-		     ;;				  
+		     ;;
+		    #8. Llistar les poblacions de l'estat seleccionat
+    		    "lce") if [ -z "$sc" ]; then
+   
+		    read -p "Selecciona un país: " sc
+		    fi                                                                                                                                                                                         
+		    if [ -z "$se" ]; then
+			    read -p "Selecciona un estat: " se
+		    fi
+		    if grep -q "$sc" cities.csv; then
+			    if grep -q "$se" cities.csv; then
+				    grep "$se" cities.csv | awk -F ',' -v se="$se" '$5 == se {print $2, $11}' | sort | uniq
+			    fi
+		    fi
+		    ;;
+		    #9. Extreure les poblacions de l'estat seleccionat
+		    "ece") if [ -z "$sc" ]; then
+		    read -p "Selecciona un país: " sc
+		    fi
+		    if [ -z "$se" ]; then
+			    read -p "Selecciona un estat: " se
+		    fi
+		    if grep -q "$sc" cities.csv; then
+			    if grep -q "$se" cities.csv; then
+				    codi_pais=$(grep "$sc" cities.csv | awk -F ',' -v sc="$sc" '$7 == sc {print $7; exit}')
+				    codi_estat=$(grep "$se" cities.csv | awk -F ',' -v se="$se" '$4 == se {print $4; exit}')
+				    awk -F ','-v se="$se" sc="$sc" '$4 == se && $7 == sc {print $2, $11}' cities.csv > "${codi_pais}_${codi_estat}.csv"
+			    fi
+		    fi
+		    ;;			
