@@ -132,7 +132,38 @@ while [ "$opcio" != "q" ] ; do
 		    est=0;
 		    oest=0;
 		    no_ubic=0;
-		    no_wd_id=3256;
+		    no_wd_id=0;
 
 	
-		    }			
+		    }
+      		  {
+                         nom=$2;
+                        latitud=$9;
+                        longitud=$10;
+                        wikidataId=$11;
+			
+   			if (latitud > 0) {
+                                nord++;
+                        } else
+                                if (latitud < 0) {
+					sud++;
+                                }
+                        if (longitud > 0) {
+                                est++;
+                        } else
+                                if (longitud < 0) {
+                                        oest++;
+					}
+                           if (latitud == 0 && longitud == 0) {
+                                no_ubic++;
+	                        }
+                        if (wikidataId == "") {
+                                         no_wd_id++;
+					 }
+                        }
+
+                        END {
+                                print "Nord " nord " Sud " sud " Est " est " Oest " oest " No ubic " no_ubic " No WDId " no_wd_id;                                                                                                         }' cities.csv
+
+        esac
+done
