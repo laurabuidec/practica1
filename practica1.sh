@@ -102,4 +102,36 @@ while [ "$opcio" != "q" ] ; do
 				    awk -F ','-v se="$se" sc="$sc" '$4 == se && $7 == sc {print $2, $11}' cities.csv > "${codi_pais}_${codi_estat}.csv"
 			    fi
 		    fi
-		    ;;			
+		    ;;	
+    		    #10. Obtenir dades d'una ciutat de la Wikidata
+    		    "gwd")
+   
+		    if [ -z "$sc" ]; then
+			    read -p "Selecciona un país: " sc
+		    fi
+		    if [ -z "$se" ]; then
+			    read -p "Selecciona un estat: " se
+		    fi
+		    read -p "Selecciona una població: " poblacio
+		    wikidataId=$(awk -F ',' -v poblacio="$poblacio" '$2 == poblacio {print $11; exit}' cities.csv)
+		    if [ -z "$wikidataId" ]; then
+			    echo "No s'ha trobat cap entrada a Wikidata per a $poblacio."
+		    else
+			    arxiudata="${wikidataId}.json"
+			    url="https://www.wikidata.org/wiki/Special:EntityData/$wikidataId.json"
+			    curl -o "$arxiudata" "$url"
+			    cat "$arxiudata"
+		    fi
+		    ;;
+		    #11. Obtenir estadístiques
+		    "est") awk -F',' '
+		    BEGIN {
+		    nord=0;
+		    sud=0;
+		    est=0;
+		    oest=0;
+		    no_ubic=0;
+		    no_wd_id=3256;
+
+	
+		    }			
